@@ -1,0 +1,6 @@
+title: Nerfies-style Project
+baseurl: "" # Leave empty unless deploying to subdirectory
+url: "https://WenliangGuo.github.io/Mistake_Detection"
+
+markdown: kramdown
+theme: minima
