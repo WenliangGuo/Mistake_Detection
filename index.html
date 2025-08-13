@@ -215,9 +215,9 @@
       <div class="column is-four-fifths">
         <h2 class="title is-3 has-text-centered">Framework</h2>
         <figure style="text-align: center;">
-          <img src="./static/images/AEM_framework.png" alt="Framework overview." class="framework-image" style="width: 100%; height: auto;">
+          <img src="./static/images/AEM_framework.png" alt="Framework overview." class="framework-image" style="width: 50%; height: auto;">
           <figcaption class="has-text-left is-size-6 mt-2" style="max-width: 100%; margin: 1rem auto 0;">
-            we adopt an action segmentation backbone to extract non-overlapping action segments from the input video frames. The resulting segment features are then fed into the Action Effect Modeling (AEM) module. The effect-aware segment features are passed into the mistake detection module, which models the mistake probability for each segment using a prompt-based detector.
+            We adopt an action segmentation backbone (ActionFormer) to extract non-overlapping action segments from the input video frames. The resulting segment features are then fed into the Action Effect Modeling (AEM) module. The effect-aware segment features are passed into the mistake detection module, which models the mistake probability for each segment using a prompt-based detector.
           </figcaption>
         </figure>
       </div>
@@ -292,7 +292,7 @@
         <div class="mt-6">
           <h3 class="title is-4 has-text-centered">Mistake Detection Results</h3>
           <figure style="text-align: center;">
-            <img src="./static/images/detection_vis.png" alt="Mistake detection visualization." class="qualitative-image" style="width: 100%; height: auto;">
+            <img src="./static/images/detection_vis.png" alt="Mistake detection visualization." class="qualitative-image" style="width: 60%; height: auto;">
             <figcaption class="has-text-left is-size-6 mt-2" style="max-width: 100%; margin: 1rem auto 0;">
               Visualizations of action segments (left) alongside the predicted correctness probabilities (right). Blue bars represent predictions from the model without action-effect modeling, while orange bars show predictions with it. The results highlight two key strengths of our approach. First, the model successfully detects mistakes that manifest in the final outcome by leveraging action-effect modeling. Second, it can also identify execution errors that occur during the action, even when the outcome appears visually correct. This demonstrates the complementary nature of effect-aware representation and temporal execution modeling in capturing a broader range of procedural mistakes.
             </figcaption>
