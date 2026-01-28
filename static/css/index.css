@@ -2,6 +2,10 @@ body {
   font-family: 'Noto Sans', sans-serif;
 }
 
+/* 减小章节之间的间隔 */
+.section {
+  padding: 2rem 1.5rem;
+}
 
 .footer .icon-link {
     font-size: 25px;

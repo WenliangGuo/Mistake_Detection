@@ -96,7 +96,10 @@
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title">Procedural Mistake Detection via Action Effect Modeling</h1>
+        <h1 class="title is-1 publication-title">
+          Procedural Mistake Detection via<br>
+          Action Effect Modeling
+        </h1>
           <div class="is-size-5 publication-authors">
             <span class="author-block">
               <a href="https://wenliangguo.github.io/">Wenliang Guo</a>,</span>
@@ -109,6 +112,10 @@
 
           <div class="is-size-5 publication-authors">
             <span class="author-block">Michigan State University</span>
+          </div>
+
+          <div class="is-size-5 publication-venue" style="margin: 1rem auto; color: #ff3860;">
+            <span>Accepted by ICLR 2026</span>
           </div>
 
           <div class="column has-text-centered">
@@ -172,15 +179,13 @@
         <h2 class="title is-3 has-text-centered">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            Mistake detection in procedural tasks is essential for developing intelligent assistive agents that enhance learning and
-            task execution. Existing methods predominantly focus on analyzing how an action is performed, overlooking what it produces, i.e., the <span class="dnerf">Action Effect</span>. However, execution mistakes often manifest not in the action itself but in its outcome, such as
-            an unintended object state or incorrect spatial arrangement.
+            Mistake detection in procedural tasks is essential for building intelligent systems that support learning and task execution. Existing approaches primarily analyze how an action is performed, while overlooking what it produces, i.e., the <span class="dnerf">Action Effect</span>. Yet many errors manifest not in the execution itself but in the resulting outcome, such as an unintended object state or incorrect spatial arrangement.
           </p>
           <p>
-            To this end, we introduce Action Effect Modeling (AEM), a unified framework that jointly captures action execution and its effects from a causal perspective. AEM first identifies the outcome of an action by selecting the most informative effect frame based on semantic relevance and visual quality. It then extracts complementary cues from visual grounding and symbolic scene graphs, aligning them in a shared latent space to form robust effect-aware representations. To detect mistakes, we further design a prompt-based detector that incorporates task-specific prompts and aligns each action segment with its intended execution semantics.
+            To address this gap, we propose Action Effect Modeling (AEM), a unified framework that jointly captures action execution and its outcomes through a probabilistic formulation. AEM first identifies the outcome of an action by selecting the most informative effect frame based on semantic relevance and visual quality. It then extracts complementary cues from visual grounding and symbolic scene graphs, aligning them in a shared latent space to form robust effect-aware representations. To detect mistakes, we further design a prompt-based detector that incorporates task-specific prompts and aligns each action segment with its intended execution semantics.
           </p>
           <p>
-            Our approach outperforms prior work on the EgoPER and CaptainCook4D benchmarks under the challenging One-Class Classification (OCC) setting. These results highlight the importance of jointly modeling execution and effect for accurate mistake detection in real-world procedural tasks.
+            Our approach achieves state-of-the-art performance on the EgoPER and CaptainCook4D benchmarks under the challenging one-class classification (OCC) setting. These results demonstrate that modeling both execution and outcome yields more reliable mistake detection, and highlight the potential of effect-aware representations to benefit a broader range of downstream applications.
           </p>
         </div>
       </div>
@@ -198,9 +203,9 @@
           <img class="demo-image"
                src="./static/images/example.gif"
                alt="Motivation figure"
-               style="width: 100%; height: auto;">
+               style="width: 80%; height: auto;">
           <figcaption style="max-width: 100%; margin: 1rem auto 0; text-align: left; font-size: 0.95rem; color: #555;">
-            Existing mistake detection approaches primarily focus on modeling the execution process, assessing correctness by analyzing motion patterns and action sequences. However, a shared limitation of these methods lies in the assumption that mistakes can be identified solely from the execution process, without verifying whether the final outcome aligns with the intended result. In real-world scenarios, the execution may appear correct, yet minor deviations can still lead to significantly flawed outcomes, which underscores a critical limitation: mistake detection should account not only for the execution process but also for its resulting action effect.
+            Existing mistake detection approaches primarily model the execution process and assess correctness by analyzing motion patterns and action sequences. A common limitation, however, is the implicit assumption that mistakes can be identified solely from the execution trajectory, without verifying whether the final outcome matches the intended goal. In real-world scenarios, execution may appear correct while subtle deviations still lead to flawed outcomes. This highlights a critical gap: mistake detection should consider not only how an action is performed, but also whether its resulting effect aligns with the desired outcome.
           </figcaption>
         </figure>
       </div>
@@ -213,11 +218,11 @@
   <div class="container is-max-desktop">
     <div class="columns is-centered">
       <div class="column is-four-fifths">
-        <h2 class="title is-3 has-text-centered">Framework</h2>
+        <h2 class="title is-3 has-text-centered">Framework Overview</h2>
         <figure style="text-align: center;">
-          <img src="./static/images/AEM_framework.png" alt="Framework overview." class="framework-image" style="width: 50%; height: auto;">
+          <img src="./static/images/framework.png" alt="Framework overview." class="framework-image" style="width: 45%; height: auto;">
           <figcaption class="has-text-left is-size-6 mt-2" style="max-width: 100%; margin: 1rem auto 0;">
-            We adopt an action segmentation backbone (ActionFormer) to extract non-overlapping action segments from the input video frames. The resulting segment features are then fed into the Action Effect Modeling (AEM) module. The effect-aware segment features are passed into the mistake detection module, which models the mistake probability for each segment using a prompt-based detector.
+            We adopt an action segmentation backbone (ActionFormer) to extract frame-level features and non-overlapping action segments. Frame features are aggregated along the temporal dimension according to segment boundaries to form segment representations. These representations are then fed into the Action Effect Modeling module to obtain enriched effect-aware features, which are subsequently passed to a prompt-based mistake detection module.
           </figcaption>
         </figure>
       </div>
@@ -230,11 +235,11 @@
   <div class="container is-max-desktop">
     <div class="columns is-centered">
       <div class="column is-four-fifths">
-        <h2 class="title is-3 has-text-centered">Effect Modeling</h2>
+        <h2 class="title is-3 has-text-centered">Action Effect Modeling</h2>
         <figure style="text-align: center;">
           <img src="./static/images/AEM.png" alt="Effect modeling overview." class="framework-image" style="width: 100%; height: auto;">
           <figcaption class="has-text-left is-size-6 mt-2" style="max-width: 100%; margin: 1rem auto 0;">
-            In AEM, we first perform effect frame sampling to identify the frame most indicative of the action outcome. Subsequently, we extract multimodal effect knowledge including object states and spatial relationships from both visual grounding and symbolic scene graphs. During training, these cues serve as supervision signals to guide effect-aware learning.
+            AEM integrates action effects by extracting multimodal features from selected effect frames and using them as external supervision. These features guide a learnable effect token, which distills outcome-related semantics into the action representation.
           </figcaption>
         </figure>
       </div>
@@ -247,11 +252,11 @@
   <div class="container is-max-desktop">
     <div class="columns is-centered">
       <div class="column is-four-fifths">
-        <h2 class="title is-3 has-text-centered">Experiments</h2>
+        <h2 class="title is-3 has-text-centered">Experimental Results</h2>
         <figure style="text-align: center;">
-          <img src="./static/images/AEM_exp.png" alt="Experiment overview." class="experiment-image" style="width: 100%; height: auto;">
+          <img src="./static/images/experiments.png" alt="Experiment overview." class="experiment-image" style="width: 100%; height: auto;">
           <figcaption class="has-text-left is-size-6 mt-2" style="max-width: 100%; margin: 1rem auto 0;">
-            We evaluate our method on two egocentric video datasets: EgoPER and CaptainCook4D. As shown in Table 1, our method significantly outperforms AMNAR in AUC across all five tasks on the EgoPER dataset, with an average improvement of 3.3%. Similarly, the results in Table 2 further demonstrate its effectiveness on the CaptainCook4D dataset, surpassing AMNAR by 9.7% in Precision and 1.5% in AUC.
+            We evaluate our method on egocentric video datasets EgoPER and CaptainCook4D. The experimental results on both datsets demonstrate that our approach achieves SOTA performance.
           </figcaption>
         </figure>
       </div>
@@ -268,7 +273,7 @@
         
         <!-- Frame Sampling Visualization -->
         <div class="mt-6">
-          <h3 class="title is-4 has-text-centered">Effect Frame Sampling</h3>
+          <h3 class="title is-4 has-text-centered">Effect-frame Sampling</h3>
           <figure style="text-align: center;">
             <img src="./static/images/frame_sample_vis.png" alt="Frame sampling visualization." class="qualitative-image" style="width: 100%; height: auto;">
             <figcaption class="has-text-left is-size-6 mt-2" style="max-width: 100%; margin: 1rem auto 0;">
@@ -290,11 +295,11 @@
 
         <!-- Mistake Detection Visualization -->
         <div class="mt-6">
-          <h3 class="title is-4 has-text-centered">Mistake Detection Results</h3>
+          <h3 class="title is-4 has-text-centered">Mistake Probability</h3>
           <figure style="text-align: center;">
-            <img src="./static/images/detection_vis.png" alt="Mistake detection visualization." class="qualitative-image" style="width: 60%; height: auto;">
+            <img src="./static/images/detection_vis.png" alt="Mistake detection visualization." class="qualitative-image" style="width: 100%; height: auto;">
             <figcaption class="has-text-left is-size-6 mt-2" style="max-width: 100%; margin: 1rem auto 0;">
-              Visualizations of action segments (left) alongside the predicted correctness probabilities (right). Blue bars represent predictions from the model without action-effect modeling, while orange bars show predictions with it. The results highlight two key strengths of our approach. First, the model successfully detects mistakes that manifest in the final outcome by leveraging action-effect modeling. Second, it can also identify execution errors that occur during the action, even when the outcome appears visually correct. This demonstrates the complementary nature of effect-aware representation and temporal execution modeling in capturing a broader range of procedural mistakes.
+              Examples of mistakes occurring in different actions. The right bar charts show mistake probabilities predicted by models without (in blue) and with (in orange) effect modeling. Red boxes in images are only used to highlight mistake regions for clearer visualization.
             </figcaption>
           </figure>
         </div>
